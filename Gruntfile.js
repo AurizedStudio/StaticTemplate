@@ -50,15 +50,15 @@ grunt.initConfig({
 		uses_defaults: {}
 	},
 	sass: {
-        dist: {
-		    options: {
-                sourcemap: 'true',
-			    style: 'expanded'
-		    },
-            files: {
-                '<%= paths.dist %>/css/style.css':'<%= paths.src %>/scss/style.scss'
-            }
-        }
+    dist: {
+    	options: {
+      	sourcemap: 'true',
+	    	style: 'expanded'
+    	},
+      files: {
+      	'<%= paths.dist %>/css/style.css':'<%= paths.src %>/scss/style.scss'
+      }
+    }
 	},
 	autoprefixer: {
 		options: {
@@ -109,31 +109,46 @@ grunt.initConfig({
 	stylestats: {
 		src: ['<%= paths.dist %>/css/style.css']
 	},
-    sprite: {
-        all:{
-            src: '<%= paths.src %>/sprite-sns-img/*.png',
-            destCSS: '<%= paths.src %>/scss/_sprite-sns-img.scss',
-            destImg: '<%= paths.dist %>/img/bg-sns.png',
-            'algorithm': 'binary-tree',
-            'imgPath': '../img/bg-sns.png'
-        }
-    },
-    webfont: {
-        icons: {
-            src: '<%= paths.src %>/svg/*.svg',
-            dest: '<%= paths.dist %>/fonts',
-            destCss: 'scss',
-            options: {
-                engine: 'node',
-                stylesheet: 'scss',
-                relativeFontPath: '../fonts'
-            }
-        }
+  sprite: {
+    all:{
+      src: '<%= paths.src %>/sprite-sns-img/*.png',
+      destCSS: '<%= paths.src %>/scss/_sprite-sns-img.scss',
+      destImg: '<%= paths.dist %>/img/bg-sns.png',
+      'algorithm': 'binary-tree',
+      'imgPath': '../img/bg-sns.png'
     }
+  },
+  webfont: {
+    icons: {
+      src: '<%= paths.src %>/svg/*.svg',
+      dest: '<%= paths.dist %>/fonts',
+      destCss: 'scss',
+      options: {
+        engine: 'node',
+        stylesheet: 'scss',
+        relativeFontPath: '../fonts'
+      }
+    }
+  },
+	image: {
+		dynamic: {
+			files: [{
+				expand: true,
+				cwd: '<%= paths.dist %>',
+				src: ['img/*.{png,jpg,gif,svg}'],
+				dest: '<%= paths.dist %>/'
+			}]
+		}
+	}
 });
 
+// 各種scssファイル、style.scss、アイコンフォントを用意。
 grunt.registerTask('pre', ['copy', 'concat']);
+// ローカルホストサーバー用意。ファイルウオッチしつつブラウザオートリーロード。
 grunt.registerTask('default', ['connect', 'browserSync', 'watch']);
+// style.css情報。
 grunt.registerTask('stats', ['stylestats']);
+// 画像圧縮。
+grunt.registerTask('img', ['image']);
 
 };
