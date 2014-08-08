@@ -135,7 +135,7 @@ grunt.initConfig({
 			files: [{
 				expand: true,
 				cwd: '<%= paths.dist %>',
-				src: ['img/*.{png,jpg,gif,svg}'],
+				src: ['img/**/*.{png,jpg,gif,svg}'],
 				dest: '<%= paths.dist %>/'
 			}]
 		}
