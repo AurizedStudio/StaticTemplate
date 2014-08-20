@@ -31,6 +31,14 @@ grunt.initConfig({
 				src:'*.*',
 				dest:'<%= paths.dist %>/fonts/'
 				}]
+    },
+    js : {
+      files : [{
+				expand:true,
+				cwd:'<%= paths.bower %>/heightLine-js/',
+				src:'jquery.heightLine.js',
+				dest:'<%= paths.dist %>/js/'
+				}]
     }
   },
 	concat: {
@@ -148,6 +156,8 @@ grunt.registerTask('pre', ['copy', 'concat']);
 grunt.registerTask('default', ['connect', 'browserSync', 'watch']);
 // style.css情報。
 grunt.registerTask('stats', ['stylestats']);
+// Webfont作成
+grunt.registerTask('font', ['webfont']);
 // 画像圧縮。
 grunt.registerTask('img', ['image']);
 
