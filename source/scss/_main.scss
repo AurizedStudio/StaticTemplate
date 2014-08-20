@@ -1,4 +1,4 @@
-/*
+/**
  *  COMMENT
  */
 
@@ -6,9 +6,11 @@
 // @import url(http://fonts.googleapis.com/css?family=Bitter);
 
 // Sprite image
-// &.social-rss a {
-//     @include sprite($item-sns01-rss);
+// @improt "xxx"; // improt sprite scss
+// Selector { // apply individually
+//     @include sprite($xxx);
 // }
 
+// mediaquery
 // @media ( max-width: $screen-sm-max ) { // 939px
 // }

@@ -111,18 +111,18 @@ grunt.initConfig({
 	},
   sprite: {
     all:{
-      src: '<%= paths.src %>/sprite-sns-img/*.png',
-      destCSS: '<%= paths.src %>/scss/_sprite-sns-img.scss',
-      destImg: '<%= paths.dist %>/img/bg-sns.png',
+      src: '<%= paths.src %>/sprite-img/*.png',
+      destCSS: '<%= paths.src %>/scss/_sprite-img.scss',
+      destImg: '<%= paths.dist %>/img/xxx.png',
       'algorithm': 'binary-tree',
-      'imgPath': '../img/bg-sns.png'
+      'imgPath': '../img/xxx.png'
     }
   },
   webfont: {
     icons: {
       src: '<%= paths.src %>/svg/*.svg',
       dest: '<%= paths.dist %>/fonts',
-      destCss: 'scss',
+      destCss: '<%= paths.src %>/scss',
       options: {
         engine: 'node',
         stylesheet: 'scss',
