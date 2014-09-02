@@ -15,32 +15,32 @@ grunt.initConfig({
 		bower: './bower_components'
 	},
 	copy : {
-    sass : {
-      files : [{
+		sass : {
+			files : [{
 				expand:true,
 				cwd:'<%= paths.bower %>/bootstrap-sass/assets/stylesheets/',
 				src:'**/*.scss',
 				dest:'<%= paths.src %>/scss/'
 				// filter:'isFile'
-				}]
+			}]
     },
     font : {
-      files : [{
+			files : [{
 				expand:true,
 				cwd:'<%= paths.bower %>/bootstrap-sass/assets/fonts/bootstrap/',
 				src:'*.*',
 				dest:'<%= paths.dist %>/fonts/'
-				}]
+			}]
     },
     js : {
-      files : [{
+			files : [{
 				expand:true,
 				cwd:'<%= paths.bower %>/heightLine-js/',
 				src:'jquery.heightLine.js',
 				dest:'<%= paths.dist %>/js/'
-				}]
+			}]
     }
-  },
+	},
 	concat: {
 		dist: {
 			src: ['<%= paths.src %>/scss/bootstrap.scss', '<%= paths.src %>/scss/add-style.scss'],
@@ -48,10 +48,10 @@ grunt.initConfig({
 		}
 	},
 	rename: {
-  	main: {
+		main: {
     	files: [
-        {src: ['<%= paths.src %>/scss/bootstrap.scss'], dest: '<%= paths.src %>/scss/style.scss'},
-      ]
+      	{src: ['<%= paths.src %>/scss/bootstrap.scss'], dest: '<%= paths.src %>/scss/style.scss'},
+			]
   	}
 	},
 	connect: {
@@ -60,12 +60,11 @@ grunt.initConfig({
 	sass: {
     dist: {
     	options: {
-      	sourcemap: 'true',
-	    	style: 'expanded'
+	   		style: 'expanded'
     	},
-      files: {
-      	'<%= paths.dist %>/css/style.css':'<%= paths.src %>/scss/style.scss'
-      }
+			files: {
+				'<%= paths.dist %>/css/style.css':'<%= paths.src %>/scss/style.scss'
+			}
     }
 	},
 	autoprefixer: {
@@ -76,12 +75,12 @@ grunt.initConfig({
 			src: '<%= paths.dist %>/css/style.css',
 		}
 	},
-  watch: {
+	watch: {
     css: {
 			files: ['<%= paths.src %>/scss/**/*.scss'],
-      tasks: ['sass', 'autoprefixer']
+			tasks: ['sass', 'autoprefixer']
     }
-  },
+	},
 	esteWatch: {
 		options: {
 			dirs: ['scss/','scss/mixins/','scss/owl/'],
@@ -101,43 +100,34 @@ grunt.initConfig({
 			},
 			options: {
 				watchTask: true,
-				proxy: "192.168.0.30:8000"
+				proxy: "192.168.0.5:8000"
 			}
 		}
-		// default_options: {
-		// 	files: {
-		// 		src: ['<%= paths.dist %>/js/*.js','<%= paths.dist %>/css/*.css','<%= paths.dist %>/*.html']
-		// 	},
-		// 	options: {
-		// 		watchTask: true,
-		// 		proxy: "192.168.0.30:8000"
-		// 	}
-		// }
 	},
 	stylestats: {
 		src: ['<%= paths.dist %>/css/style.css']
 	},
-  sprite: {
+	sprite: {
     all:{
-      src: '<%= paths.src %>/sprite-img/*.png',
-      destCSS: '<%= paths.src %>/scss/_sprite-img.scss',
-      destImg: '<%= paths.dist %>/img/xxx.png',
-      'algorithm': 'binary-tree',
-      'imgPath': '../img/xxx.png'
+			src: '<%= paths.src %>/sprite-img/*.png',
+			destCSS: '<%= paths.src %>/scss/_sprite-img.scss',
+			destImg: '<%= paths.dist %>/img/xxx.png',
+			'algorithm': 'binary-tree',
+			'imgPath': '../img/xxx.png'
     }
-  },
-  webfont: {
-    icons: {
-      src: '<%= paths.src %>/svg/*.svg',
-      dest: '<%= paths.dist %>/fonts',
-      destCss: '<%= paths.src %>/scss',
-      options: {
-        engine: 'node',
-        stylesheet: 'scss',
-        relativeFontPath: '../fonts'
-      }
-    }
-  },
+	},
+	webfont: {
+		icons: {
+			src: '<%= paths.src %>/svg/*.svg',
+			dest: '<%= paths.dist %>/fonts',
+			destCss: '<%= paths.src %>/scss',
+			options: {
+				engine: 'node',
+				stylesheet: 'scss',
+				relativeFontPath: '../fonts'
+			}
+		}
+	},
 	image: {
 		dynamic: {
 			files: [{
