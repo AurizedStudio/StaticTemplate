@@ -43,16 +43,9 @@ grunt.initConfig({
 	},
 	concat: {
 		dist: {
-			src: ['<%= paths.src %>/scss/bootstrap.scss', '<%= paths.src %>/scss/add-style.scss'],
+			src: ['<%= paths.src %>/scss/_bootstrap.scss', '<%= paths.src %>/scss/add-style.scss'],
 			dest: '<%= paths.src %>/scss/style.scss'
 		}
-	},
-	rename: {
-		main: {
-    	files: [
-      	{src: ['<%= paths.src %>/scss/bootstrap.scss'], dest: '<%= paths.src %>/scss/style.scss'},
-			]
-  	}
 	},
 	connect: {
 		uses_defaults: {}
