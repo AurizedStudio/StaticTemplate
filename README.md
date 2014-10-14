@@ -17,6 +17,4 @@ To make sprite image:
 ```gulp sprite```
 
 To make webfont(iconfont):  
-```grunt```  
-or
-```grunt font```
+``grunt`` or ``grunt font``
