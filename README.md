@@ -5,13 +5,18 @@ I use this template when I do web site cording from nothing.
 
 ## Usage
 
+First of all you have to do this.  
+
 ```
-1. bower install  
-2. npm install  
-3. grunt pre  
-4. grunt  
+1. npm install  
+2. npm run pre  
+3. npm start  
 ```
 
-### Others
+To make sprite image:  
+```gulp sprite```
 
-You might need to change proxy. (Gruntfile.js:line104)
+To make webfont(iconfont):  
+```grunt```  
+or
+```grunt font```

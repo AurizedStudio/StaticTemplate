@@ -2,7 +2,6 @@
   "name": "product",
   "version": "0.0.0",
   "devDependencies": {
-    "bootstrap-sass": "https://github.com/twbs/bootstrap-sass.git",
-    "heightLine-js": "https://github.com/to-r/jquery.heightLine.js.git"
+    "bootstrap-sass": "https://github.com/twbs/bootstrap-sass.git"
   }
 }
