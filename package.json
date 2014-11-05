@@ -1,6 +1,6 @@
 {
   "name": "product",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "scripts": {
     "start": "gulp",
     "postinstall": "bower install",
@@ -8,10 +8,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "browser-sync": "^1.5.7",
+    "browser-sync": "^1.6.3",
     "grunt": "^0.4.5",
     "grunt-webfont": "^0.4.8",
-    "gulp": "^3.8.8",
+    "gulp": "^3.8.10",
     "gulp-autoprefixer": "^1.0.1",
     "gulp-cached": "^1.0.1",
     "gulp-concat": "^2.4.1",
