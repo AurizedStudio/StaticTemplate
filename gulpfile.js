@@ -10,7 +10,10 @@ var using = require('gulp-using'); // タスクが処理をしているファイ
 var cached = require('gulp-cached'); // 変更があったファイルにだけ処理を行う
 var remember = require('gulp-remember'); // キャッシュしたストリームを取り出す
 // var runSequence = require('run-sequence'); // 順番に実行してほしいタスク名を指定
-var spritesmith = require('gulp.spritesmith');
+var spritesmith = require('gulp.spritesmith'); // スプライトイメージ作成
+// var iconfont = require('gulp-iconfont'); // アイコンフォント作成
+// var iconfontCss = require('gulp-iconfont-css');
+// var consolidate = require('gulp-consolidate');
 
 var path = {
     srcScss: './source/scss/',
@@ -63,17 +66,20 @@ gulp.task('preConcat', function() {
 
 // Sassコンパイル
 gulp.task('sass', function() {
-    var stream = gulp.src(path.srcScss + 'style.scss')
+    return gulp.src(path.srcScss + 'style.scss')
     .pipe(plumberWithNotify())
 //    .pipe(cached())
 //    .pipe(using())
     .pipe(sass({
         style: 'expanded'
     }))
+    //    .pipe(autoprefixer({ // Ver2.0.0用 <-相性が良くない…
+    //        browsers: ['last 2 versions', 'ie 8'],
+    //        cascade: false
+    //    }))
     .pipe(autoprefixer('last 2 version', 'ie 8'))
 //    .pipe(remember())
     .pipe(gulp.dest(path.destCss));
-    return stream;
 });
 
 gulp.task('watch', ['server'], function() {
@@ -95,6 +101,23 @@ gulp.task('sprite', function () {
   // Pipe CSS stream through CSS optimizer and onto disk
   spriteData.css
     .pipe(gulp.dest(path.srcScss));
+});
+
+// アイコンフォント作成 <- テンプレートが必要。grunt-webfontはsvgを用意するのみでいける
+gulp.task('iconfont', function(){
+    gulp.src([path.srcSvg + '*.svg'])
+    .pipe(iconfont({ fontName: 'iconfont' }))
+    .on('codepoints', function(codepoints, options) {
+        gulp.src(path.srcScss + '_iconfont-template.scss')
+        .pipe(consolidate('lodash', {
+            glyphs: codepoints,
+            fontName: 'iconfont',
+            fontPath: '../fonts/',
+            className: 'iconfont'
+        }))
+        .pipe(gulp.dest(path.srcScss));
+    })
+    .pipe(gulp.dest(path.destFont));
 });
 
 // デフォルト ローカルサーバーを起ち上げ、ファイルを監視しつつ、ブラウザオートリロード
