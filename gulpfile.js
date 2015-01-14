@@ -42,12 +42,14 @@ gulp.task('server', function() {
     });
 });
 
-// Bootstrap Sassファイル、fontファイルをコピー
+// Bootstrap Sassファイル、fontファイル、Animate Sassファイルをコピー
 gulp.task('preCopy', function() {
     gulp.src('./bower_components/bootstrap-sass/assets/stylesheets/**/*')
     .pipe(gulp.dest(path.srcScss));
     gulp.src('./bower_components/bootstrap-sass/assets/fonts/bootstrap/*')
     .pipe(gulp.dest(path.dest + 'fonts/'));
+    gulp.src('./bower_components/animate-sass/**/*')
+    .pipe(gulp.dest(path.srcScss + 'animate/'));
 });
 
 // _bootstrap.scssをリネーム
