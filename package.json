@@ -1,6 +1,6 @@
 {
   "name": "product",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "scripts": {
     "start": "gulp",
     "postinstall": "bower install",
@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "browser-sync": "^1.7.3",
+    "browser-sync": "^1.8.2",
     "grunt": "^0.4.5",
     "grunt-webfont": "^0.4.8",
     "gulp": "^3.8.10",

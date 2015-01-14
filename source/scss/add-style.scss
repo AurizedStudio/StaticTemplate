@@ -13,11 +13,15 @@
 // @import "owl/owl.carousel.1.3.3";
 
 // OWLv2 slider
-// @import "owl/owl.carousel";
+// @import "owl/mixins";
 // @import "owl/owl.animate";
 // @import "owl/owl.autoheight";
+// @import "owl/owl.carousel";
 // @import "owl/owl.lazyload";
-// @import "owl/owl.theme";
+// @import "owl/owl.video";
+
+// Animate.css
+@import "animate/animate.scss";
 
 // Main
 @import "main";
