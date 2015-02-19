@@ -9,11 +9,10 @@ var notify = require('gulp-notify'); // エラーが起こったときの通知
 var using = require('gulp-using'); // タスクが処理をしているファイル名を出力
 var cached = require('gulp-cached'); // 変更があったファイルにだけ処理を行う
 var remember = require('gulp-remember'); // キャッシュしたストリームを取り出す
-// var runSequence = require('run-sequence'); // 順番に実行してほしいタスク名を指定
 var spritesmith = require('gulp.spritesmith'); // スプライトイメージ作成
-// var iconfont = require('gulp-iconfont'); // アイコンフォント作成
-// var iconfontCss = require('gulp-iconfont-css');
-// var consolidate = require('gulp-consolidate');
+var iconfont = require('gulp-iconfont'); // アイコンフォント作成
+var consolidate = require('gulp-consolidate'); // アイコンフォント作成
+// var runSequence = require('run-sequence'); // 順番に実行してほしいタスク名を指定
 
 var path = {
     srcScss: './source/scss/',
@@ -73,19 +72,23 @@ gulp.task('sass', function() {
 //    .pipe(cached())
 //    .pipe(using())
     .pipe(sass({
-        style: 'expanded'
+        style: 'expanded',
+        "sourcemap=none": true
     }))
-    //    .pipe(autoprefixer({ // Ver2.0.0用 <-相性が良くない…
-    //        browsers: ['last 2 versions', 'ie 8'],
-    //        cascade: false
-    //    }))
-    .pipe(autoprefixer('last 2 version', 'ie 8'))
+    .pipe(autoprefixer({
+        browsers: ['last 2 versions', 'ie 8'],
+        cascade: false
+    }))
 //    .pipe(remember())
     .pipe(gulp.dest(path.destCss));
 });
 
+// 監視
 gulp.task('watch', ['server'], function() {
-    gulp.watch([path.srcScss + '**/*.scss', path.dest + '*.html'], ['sass', browserSync.reload]);
+    gulp.watch(
+        [path.srcScss + '**/*.scss', path.dest + '*.html'],
+        ['sass', browserSync.reload]
+    );
 });
 
 // スプライトイメージ作成
@@ -94,7 +97,7 @@ gulp.task('sprite', function () {
   var spriteData = gulp.src(path.srcSprite + '*.png').pipe(spritesmith({
     imgName: 'sprite.png',
     cssName: '_img-sprite.scss',
-    algorithm: 'binary-tree',
+//    algorithm: 'binary-tree',
     imgPath: '../img/sprite.png'
   }));
   // Pipe image stream through image optimizer and onto disk
@@ -105,12 +108,15 @@ gulp.task('sprite', function () {
     .pipe(gulp.dest(path.srcScss));
 });
 
-// アイコンフォント作成 <- テンプレートが必要。grunt-webfontはsvgを用意するのみでいける
+// アイコンフォント作成
 gulp.task('iconfont', function(){
     gulp.src([path.srcSvg + '*.svg'])
-    .pipe(iconfont({ fontName: 'iconfont' }))
+    .pipe(iconfont({
+        fontName: 'iconfont',
+        normalize: true
+    }))
     .on('codepoints', function(codepoints, options) {
-        gulp.src(path.srcScss + '_iconfont-template.scss')
+        gulp.src(path.srcScss + 'iconfont/_iconfont.scss')
         .pipe(consolidate('lodash', {
             glyphs: codepoints,
             fontName: 'iconfont',

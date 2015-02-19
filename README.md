@@ -14,7 +14,7 @@ First of all you have to do this.
 ```
 
 To make sprite image:  
-```gulp sprite```
+``gulp sprite``
 
 To make webfont(iconfont):  
-``grunt`` or ``grunt font``
+``gulp iconfont``
