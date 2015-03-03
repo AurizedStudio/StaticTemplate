@@ -1,6 +1,6 @@
 {
   "name": "product",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "scripts": {
     "start": "gulp",
     "postinstall": "bower install",
@@ -23,7 +23,7 @@
     "gulp-ruby-sass": "^0.7.1",
     "gulp-sourcemaps": "^1.5.0",
     "gulp-using": "0.0.1",
-    "gulp.spritesmith": "^2.7.0",
+    "gulp.spritesmith": "^3.2.0",
     "lodash": "^3.2.0"
   }
 }
