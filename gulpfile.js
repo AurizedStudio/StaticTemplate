@@ -3,7 +3,10 @@ var concat = require('gulp-concat');
 var rename = require("gulp-rename");
 var sass = require('gulp-ruby-sass');
 var browserSync = require('browser-sync');
-var autoprefixer = require('gulp-autoprefixer');
+//var autoprefixer = require('gulp-autoprefixer');
+var postcss      = require('gulp-postcss');
+var sourcemaps   = require('gulp-sourcemaps');
+var autoprefixer = require('autoprefixer-core');
 var plumber = require('gulp-plumber'); // エラーが起きてもwatchを終了しない
 var notify = require('gulp-notify'); // エラーが起こったときの通知
 var using = require('gulp-using'); // タスクが処理をしているファイル名を出力
@@ -75,11 +78,15 @@ gulp.task('sass', function() {
         style: 'expanded',
         "sourcemap=none": true
     }))
-    .pipe(autoprefixer({
-        browsers: ['last 2 versions', 'ie 8'],
-        cascade: false
-    }))
+    // .pipe(autoprefixer({
+    //     browsers: ['last 2 versions', 'ie 8'],
+    //     cascade: false
+    // }))
 //    .pipe(remember())
+    .pipe(gulp.dest(path.destCss))
+    .pipe(sourcemaps.init())
+    .pipe(postcss([ autoprefixer({ browsers: ['last 2 version'] }) ]))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(path.destCss));
 });
 
