@@ -24,6 +24,7 @@ var path = {
     dest: './htdocs/',
     destCss: './htdocs/css/',
     destImg: './htdocs/img/',
+    destJs: './htdocs/js/',
     destFont: './htdocs/fonts/'
 //    scripts: ['client/js/**/*.coffee', '!client/external/**/*.coffee'],
 };
@@ -70,18 +71,10 @@ gulp.task('preConcat', function() {
 
 // Sassコンパイル
 gulp.task('sass', function() {
-    return gulp.src(path.srcScss + 'style.scss')
-    .pipe(plumberWithNotify())
+    return sass(path.srcScss + 'style.scss', {style:'expanded'})
+//    .pipe(plumberWithNotify())
 //    .pipe(cached())
 //    .pipe(using())
-    .pipe(sass({
-        style: 'expanded',
-        "sourcemap=none": true
-    }))
-    // .pipe(autoprefixer({
-    //     browsers: ['last 2 versions', 'ie 8'],
-    //     cascade: false
-    // }))
 //    .pipe(remember())
     .pipe(gulp.dest(path.destCss))
     .pipe(sourcemaps.init())
@@ -93,7 +86,7 @@ gulp.task('sass', function() {
 // 監視
 gulp.task('watch', ['server'], function() {
     gulp.watch(
-        [path.srcScss + '**/*.scss', path.dest + '*.html'],
+        [path.srcScss + '**/*.scss', path.dest + '*.html', path.destJs + '*.js'],
         ['sass', browserSync.reload]
     );
 });
