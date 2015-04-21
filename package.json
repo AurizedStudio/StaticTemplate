@@ -1,6 +1,6 @@
 {
   "name": "product",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "scripts": {
     "start": "gulp",
     "postinstall": "bower install",
@@ -24,6 +24,6 @@
     "gulp-sourcemaps": "^1.5.0",
     "gulp-using": "0.0.1",
     "gulp.spritesmith": "^3.2.0",
-    "lodash": "^3.2.0"
+    "underscore": "^1.8.3"
   }
 }

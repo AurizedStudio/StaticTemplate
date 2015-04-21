@@ -109,17 +109,18 @@ gulp.task('sprite', function () {
 });
 
 // アイコンフォント作成
+var fontName = 'iconfont';
 gulp.task('iconfont', function(){
     gulp.src([path.srcSvg + '*.svg'])
     .pipe(iconfont({
-        fontName: 'iconfont',
+        fontName: fontName,
         normalize: true
     }))
     .on('codepoints', function(codepoints, options) {
         gulp.src(path.srcScss + 'iconfont/_iconfont.scss')
-        .pipe(consolidate('lodash', {
+        .pipe(consolidate('underscore', {
             glyphs: codepoints,
-            fontName: 'iconfont',
+            fontName: fontName,
             fontPath: '../fonts/',
             className: 'iconfont'
         }))
