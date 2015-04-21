@@ -10,6 +10,8 @@
 }
 
 <%= glyphs.map(function(glyph){ return '.' + className + '-' + glyph.name + ':before' }).join(',\n') %> {
+  position: relative;
+  top: -.1em;
   font-family: "<%= fontName %>";
   speak: none;
   font-style: normal;
