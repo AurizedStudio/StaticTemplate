@@ -5,8 +5,6 @@
     url('<%= fontPath %><%= fontName %>.woff') format('woff'),
     url('<%= fontPath %><%= fontName %>.ttf') format('truetype'),
     url('<%= fontPath %><%= fontName %>.svg#<%= fontName %>') format('svg');
-  font-weight: normal;
-  font-style: normal;
 }
 
 <%= glyphs.map(function(glyph){ return '.' + className + '-' + glyph.name + ':before' }).join(',\n') %> {

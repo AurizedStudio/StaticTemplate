@@ -15,6 +15,7 @@ var remember = require('gulp-remember'); // キャッシュしたストリーム
 var spritesmith = require('gulp.spritesmith'); // スプライトイメージ作成
 var iconfont = require('gulp-iconfont'); // アイコンフォント作成
 var consolidate = require('gulp-consolidate'); // アイコンフォント作成
+var useref = require('gulp-useref'); // HTML内読み込み外部ファイルを結合する <!-- bulid:js -->等
 // var runSequence = require('run-sequence'); // 順番に実行してほしいタスク名を指定
 
 var path = {
@@ -127,6 +128,16 @@ gulp.task('iconfont', function(){
         .pipe(gulp.dest(path.srcScss));
     })
     .pipe(gulp.dest(path.destFont));
+});
+
+// jsファイル等を結合
+gulp.task('fileconcat', function () {
+    var assets = useref.assets();
+    return gulp.src(path.dest + '*.html')
+        .pipe(assets)
+        .pipe(assets.restore())
+        .pipe(useref())
+        .pipe(gulp.dest(path.dest));
 });
 
 // デフォルト ローカルサーバーを起ち上げ、ファイルを監視しつつ、ブラウザオートリロード
