@@ -1,6 +1,6 @@
 {
   "name": "product",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "scripts": {
     "start": "gulp",
     "postinstall": "bower install",
@@ -10,6 +10,7 @@
   "devDependencies": {
     "autoprefixer-core": "^5.1.7",
     "browser-sync": "^2.1.4",
+    "glob": "^5.0.6",
     "gulp": "^3.8.5",
     "gulp-cached": "^1.0.1",
     "gulp-concat": "^2.4.2",
@@ -22,6 +23,7 @@
     "gulp-rename": "^1.2.0",
     "gulp-ruby-sass": "^1.0.1",
     "gulp-sourcemaps": "^1.5.0",
+    "gulp-uncss": "^1.0.1",
     "gulp-useref": "^1.1.2",
     "gulp-using": "0.0.1",
     "gulp.spritesmith": "^3.2.0",
