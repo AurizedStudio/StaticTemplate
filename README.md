@@ -18,3 +18,6 @@ To make sprite image:
 
 To make webfont(iconfont):  
 ``gulp iconfont``
+
+To delete unusing css selector:  
+``gulp delselector``

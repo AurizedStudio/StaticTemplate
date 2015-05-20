@@ -16,6 +16,8 @@ var spritesmith = require('gulp.spritesmith'); // スプライトイメージ作
 var iconfont = require('gulp-iconfont'); // アイコンフォント作成
 var consolidate = require('gulp-consolidate'); // アイコンフォント作成
 var useref = require('gulp-useref'); // HTML内読み込み外部ファイルを結合する <!-- bulid:js -->等
+var uncss = require('gulp-uncss'); // 未使用CSSセレクターを削除
+var glob = require('glob'); // セレクターの使用状況を判別するためのHTMLを指定
 // var runSequence = require('run-sequence'); // 順番に実行してほしいタスク名を指定
 
 var path = {
@@ -139,6 +141,24 @@ gulp.task('fileconcat', function () {
         .pipe(useref())
         .pipe(gulp.dest(path.dest));
 });
+
+// 未使用CSSセレクタ削除
+gulp.task('delselector', function(){
+    return gulp.src(path.destCss + 'style.css')
+        .pipe(uncss({
+            html: glob.sync(path.dest + '*.html'),
+            ignore: [
+                /\.open/,
+                /\.active/,
+                /\.collapse/,
+                /\.tooltip/,
+                /\.popover/,
+                /\.carousel/,
+                /\.in/
+            ]
+        }))
+        .pipe(gulp.dest(path.destCss));
+})
 
 // デフォルト ローカルサーバーを起ち上げ、ファイルを監視しつつ、ブラウザオートリロード
 gulp.task('default', ['watch']);
