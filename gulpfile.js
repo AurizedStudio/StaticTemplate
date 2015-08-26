@@ -112,17 +112,22 @@ gulp.task('iconfont', function(){
         fontName: fontName,
         normalize: true
     }))
-    .on('codepoints', function(codepoints, options) {
+    .on('glyphs', function(glyphs) {
+        var options = {
+        glyphs: glyphs.map(function(glyph) {
+          // this line is needed because gulp-iconfont has changed the api from 2.0
+          return { name: glyph.name, codepoint: glyph.unicode[0].charCodeAt(0) }
+        }),
+        fontName: fontName,
+        fontPath: '../fonts/', // set path to font (from your CSS file if relative)
+        className: 'iconfont' // set class name in your CSS
+        };
         gulp.src(path.srcScss + 'iconfont/_iconfont.scss')
-        .pipe(consolidate('underscore', {
-            glyphs: codepoints,
-            fontName: fontName,
-            fontPath: '../fonts/',
-            className: 'iconfont'
-        }))
-        .pipe(gulp.dest(path.srcScss));
+        .pipe(consolidate('lodash', options))
+        .pipe(rename({ basename:fontName }))
+        .pipe(gulp.dest(path.srcScss)); // set path to export your CSS
     })
-    .pipe(gulp.dest(path.destFont));
+    .pipe(gulp.dest(path.destFont)); // set path to export your fonts
 });
 
 // jsファイル等を結合
