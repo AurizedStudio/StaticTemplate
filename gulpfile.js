@@ -1,17 +1,17 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var rename = require("gulp-rename");
-var sass = require('gulp-ruby-sass');
-var browserSync = require('browser-sync');
+var sass = require('gulp-sass');
+var browserSync = require('browser-sync').create();
 //var autoprefixer = require('gulp-autoprefixer');
 var postcss      = require('gulp-postcss');
 var sourcemaps   = require('gulp-sourcemaps');
 var autoprefixer = require('autoprefixer-core');
 var plumber = require('gulp-plumber'); // エラーが起きてもwatchを終了しない
 var notify = require('gulp-notify'); // エラーが起こったときの通知
-var using = require('gulp-using'); // タスクが処理をしているファイル名を出力
-var cached = require('gulp-cached'); // 変更があったファイルにだけ処理を行う
-var remember = require('gulp-remember'); // キャッシュしたストリームを取り出す
+// var using = require('gulp-using'); // タスクが処理をしているファイル名を出力
+// var cached = require('gulp-cached'); // 変更があったファイルにだけ処理を行う
+// var remember = require('gulp-remember'); // キャッシュしたストリームを取り出す
 var spritesmith = require('gulp.spritesmith'); // スプライトイメージ作成
 var iconfont = require('gulp-iconfont'); // アイコンフォント作成
 var consolidate = require('gulp-consolidate'); // アイコンフォント作成
@@ -38,16 +38,6 @@ function plumberWithNotify() {
     return plumber({errorHandler: notify.onError("<%= error.message %>")});
 }
 
-// ローカルサーバーをたてる
-gulp.task('server', function() {
-    browserSync({
-        server: {
-            baseDir: path.dest,
-            directory: true
-        }
-    });
-});
-
 // Bootstrap Sassファイル、fontファイル、Animate Sassファイルをコピー
 gulp.task('preCopy', function() {
     gulp.src('./bower_components/bootstrap-sass/assets/stylesheets/**/*')
@@ -72,26 +62,29 @@ gulp.task('preConcat', function() {
     .pipe(gulp.dest(path.srcScss));
 });
 
-// Sassコンパイル
-gulp.task('sass', function() {
-    return sass(path.srcScss + 'style.scss', {style:'expanded'})
-//    .pipe(plumberWithNotify())
-//    .pipe(cached())
-//    .pipe(using())
-//    .pipe(remember())
-    .pipe(gulp.dest(path.destCss))
+// libsassコンパイル
+gulp.task('sass', function () {
+    return gulp.src(path.srcScss + 'style.scss')
+    .pipe(plumberWithNotify())
     .pipe(sourcemaps.init())
+    .pipe(sass({outputStyle: 'expanded'}))
+    .pipe(gulp.dest(path.destCss))
     .pipe(postcss([ autoprefixer({ browsers: ['last 2 version'] }) ]))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(path.destCss));
+    .pipe(gulp.dest(path.destCss))
+    .pipe(browserSync.stream());
 });
 
-// 監視
-gulp.task('watch', ['server'], function() {
-    gulp.watch(
-        [path.srcScss + '**/*.scss', path.dest + '*.html', path.destJs + '*.js'],
-        ['sass', browserSync.reload]
-    );
+// ローカルサーバー＋監視
+gulp.task('serve', ['sass'], function() {
+    browserSync.init({
+        server: {
+            baseDir: path.dest,
+            directory: true
+        }
+    });
+    gulp.watch(path.srcScss + '**/*.scss', ['sass']);
+    gulp.watch([path.dest + '*.html', path.destJs + '*.js']).on('change', browserSync.reload);
 });
 
 // スプライトイメージ作成
@@ -119,17 +112,22 @@ gulp.task('iconfont', function(){
         fontName: fontName,
         normalize: true
     }))
-    .on('codepoints', function(codepoints, options) {
+    .on('glyphs', function(glyphs) {
+        var options = {
+        glyphs: glyphs.map(function(glyph) {
+          // this line is needed because gulp-iconfont has changed the api from 2.0
+          return { name: glyph.name, codepoint: glyph.unicode[0].charCodeAt(0) }
+        }),
+        fontName: fontName,
+        fontPath: '../fonts/', // set path to font (from your CSS file if relative)
+        className: 'iconfont' // set class name in your CSS
+        };
         gulp.src(path.srcScss + 'iconfont/_iconfont.scss')
-        .pipe(consolidate('underscore', {
-            glyphs: codepoints,
-            fontName: fontName,
-            fontPath: '../fonts/',
-            className: 'iconfont'
-        }))
-        .pipe(gulp.dest(path.srcScss));
+        .pipe(consolidate('lodash', options))
+        .pipe(rename({ basename:fontName }))
+        .pipe(gulp.dest(path.srcScss)); // set path to export your CSS
     })
-    .pipe(gulp.dest(path.destFont));
+    .pipe(gulp.dest(path.destFont)); // set path to export your fonts
 });
 
 // jsファイル等を結合
@@ -161,4 +159,4 @@ gulp.task('delselector', function(){
 })
 
 // デフォルト ローカルサーバーを起ち上げ、ファイルを監視しつつ、ブラウザオートリロード
-gulp.task('default', ['watch']);
+gulp.task('default', ['serve']);
