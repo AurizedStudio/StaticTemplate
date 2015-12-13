@@ -6,7 +6,7 @@ var browserSync = require('browser-sync').create();
 //var autoprefixer = require('gulp-autoprefixer');
 var postcss      = require('gulp-postcss');
 var sourcemaps   = require('gulp-sourcemaps');
-var autoprefixer = require('autoprefixer-core');
+var autoprefixer = require('autoprefixer');
 var plumber = require('gulp-plumber'); // エラーが起きてもwatchを終了しない
 var notify = require('gulp-notify'); // エラーが起こったときの通知
 // var using = require('gulp-using'); // タスクが処理をしているファイル名を出力
@@ -69,7 +69,7 @@ gulp.task('sass', function () {
     .pipe(sourcemaps.init())
     .pipe(sass({outputStyle: 'expanded'}))
     .pipe(gulp.dest(path.destCss))
-    .pipe(postcss([ autoprefixer({ browsers: ['last 2 version'] }) ]))
+    .pipe(postcss([ autoprefixer({ browsers: ['last 2 version','ie 9','ie 8'] }) ]))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(path.destCss))
     .pipe(browserSync.stream());
@@ -130,12 +130,9 @@ gulp.task('iconfont', function(){
     .pipe(gulp.dest(path.destFont)); // set path to export your fonts
 });
 
-// jsファイル等を結合
+// jsファイル等を結合 build〜endbuildを結合
 gulp.task('fileconcat', function () {
-    var assets = useref.assets();
     return gulp.src(path.dest + '*.html')
-        .pipe(assets)
-        .pipe(assets.restore())
         .pipe(useref())
         .pipe(gulp.dest(path.dest));
 });
