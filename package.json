@@ -1,6 +1,6 @@
 {
   "name": "product",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "scripts": {
     "start": "gulp",
     "postinstall": "bower install",
@@ -10,11 +10,11 @@
   "devDependencies": {
     "autoprefixer": "^6.3.1",
     "browser-sync": "^2.10.1",
-    "glob": "^6.0.1",
+    "glob": "^7.0.3",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.4.2",
-    "gulp-consolidate": "^0.1.2",
-    "gulp-iconfont": "^5.0.1",
+    "gulp-consolidate": "^0.2.0",
+    "gulp-iconfont": "^6.0.0",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.0.1",
     "gulp-postcss": "^6.0.1",
@@ -24,6 +24,6 @@
     "gulp-uncss": "^1.0.1",
     "gulp-useref": "^3.0.3",
     "gulp.spritesmith": "^6.0.1",
-    "lodash": "^3.10.1"
+    "lodash": "^4.7.0"
   }
 }
