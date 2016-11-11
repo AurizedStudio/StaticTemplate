@@ -68,7 +68,7 @@ gulp.task('sass', function () {
     .pipe(plumberWithNotify())
     .pipe(sourcemaps.init())
     .pipe(sass({outputStyle: 'expanded'}))
-    .pipe(postcss([ autoprefixer({ browsers: ['last 2 version','ie 9'] }) ]))
+    .pipe(postcss([ autoprefixer({ browsers: ['last 2 version','ie >= 9'] }) ]))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(path.destCss));
 });
