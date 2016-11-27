@@ -7,6 +7,9 @@ var browserSync = require('browser-sync').create();
 var postcss      = require('gulp-postcss');
 var sourcemaps   = require('gulp-sourcemaps');
 var autoprefixer = require('autoprefixer');
+var gutil = require('gulp-util');
+var gulpif = require('gulp-if');
+var csscomb = require('gulp-csscomb'); // css整形
 var plumber = require('gulp-plumber'); // エラーが起きてもwatchを終了しない
 var notify = require('gulp-notify'); // エラーが起こったときの通知
 // var using = require('gulp-using'); // タスクが処理をしているファイル名を出力
@@ -62,14 +65,25 @@ gulp.task('preConcat', function() {
     .pipe(gulp.dest(path.srcScss));
 });
 
+// コンパイル環境セット　デフォルト：development(作成時) コマンドライン：gulp
+var isDev = true;
+var isProd = false;
+
+// production(納品時)　コマンドライン：gulp --type production
+if(gutil.env.type === 'production') {
+  isDev  = false;
+  isProd = true;
+}
+
 // libsassコンパイル
 gulp.task('sass', function () {
     return gulp.src(path.srcScss + 'style.scss')
     .pipe(plumberWithNotify())
-    .pipe(sourcemaps.init())
+    .pipe(gulpif(isDev, sourcemaps.init()))
     .pipe(sass({outputStyle: 'expanded'}))
     .pipe(postcss([ autoprefixer({ browsers: ['last 2 version','ie >= 9'] }) ]))
-    .pipe(sourcemaps.write('.'))
+    .pipe(gulpif(isProd, csscomb()))
+    .pipe(gulpif(isDev, sourcemaps.write('.')))
     .pipe(gulp.dest(path.destCss));
 });
 
