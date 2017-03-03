@@ -1,6 +1,6 @@
 {
   "name": "product",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "scripts": {
     "start": "gulp",
     "postinstall": "bower install",
@@ -12,11 +12,13 @@
     "browser-sync": "^2.18.8",
     "glob": "^7.1.1",
     "gulp": "^3.9.1",
+    "gulp-changed": "^2.0.0",
     "gulp-concat": "^2.6.0",
     "gulp-consolidate": "^0.2.0",
     "gulp-csscomb": "^3.0.8",
     "gulp-iconfont": "^8.0.1",
     "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^3.1.1",
     "gulp-notify": "^3.0.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^6.3.0",

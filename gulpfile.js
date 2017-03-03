@@ -9,6 +9,8 @@ var sourcemaps   = require('gulp-sourcemaps');
 var autoprefixer = require('autoprefixer');
 var gutil = require('gulp-util');
 var gulpif = require('gulp-if');
+var imagemin = require('gulp-imagemin');
+var changed = require('gulp-changed');
 var csscomb = require('gulp-csscomb'); // css整形
 var plumber = require('gulp-plumber'); // エラーが起きてもwatchを終了しない
 var notify = require('gulp-notify'); // エラーが起こったときの通知
@@ -87,8 +89,16 @@ gulp.task('sass', function () {
     .pipe(gulp.dest(path.destCss));
 });
 
+// 画像圧縮
+gulp.task('images', function() {
+  gulp.src(path.destImg + '*.{gif,jpg,png}')
+//		.pipe(changed(path.destImg))
+  .pipe(imagemin({ optimizationLevel: 5 }))
+  .pipe(gulp.dest(path.destImg));
+});
+
 // ローカルサーバー＋監視
-gulp.task('serve', ['sass'], function() {
+gulp.task('serve', ['sass', 'images'], function() {
     browserSync.init({
         server: {
             baseDir: path.dest,
@@ -96,6 +106,7 @@ gulp.task('serve', ['sass'], function() {
         }
     });
     gulp.watch(path.srcScss + '**/*.scss', ['sass']);
+//    gulp.watch(path.srcImg + '*.{gif,jpg,png}', ['images']);
     gulp.watch([
         path.dest + '*.html',
         path.destCss + '*.css',
